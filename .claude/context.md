@@ -11,8 +11,8 @@ category: 产品
 project_type: cli-python-tool
 
 # ============ 工作追踪 ============
-current_focus: "优化 README 和区分工作区/项目 context"
-next_steps: "实现 ctx init --workspace 和 ctx init --project 选项"
+current_focus: "完成 v0.2.0 - 区分工作区和项目 context"
+next_steps: "准备发布 v0.2.0 到 PyPI"
 branch: main
 
 # ============ 项目描述 ============
@@ -34,9 +34,9 @@ stack:
 - [x] ✅ 编写完整 README（1051行）
 - [x] ✅ 配置 GitHub Actions CI/CD
 - [x] ✅ 发布到 PyPI (ctxmgr v0.1.4)
-- [ ] 区分工作区和项目 context 模板
-- [ ] 实现 ctx init --workspace/--project 选项
-- [ ] 添加 workspace 级别的任务管理
+- [x] ✅ 区分工作区和项目 context 模板
+- [x] ✅ 实现 ctx init --workspace/--project 选项
+- [ ] 发布 v0.2.0 到 PyPI
 
 ### P1 [本月]
 - [ ] 增加测试覆盖率到 80%+
@@ -45,6 +45,20 @@ stack:
 - [ ] 添加 shell 集成文档
 
 ## 📝 会话记录
+
+### 2026-02-04 (会话 #13)
+**主题**: 实现工作区和项目 context 区分
+**分支**: main
+**完成**:
+- ✅ 添加 `ctx init --type` 选项
+- ✅ 实现两种不同的模板生成函数
+- ✅ 更新 SKILL.md 文档，添加详细说明
+- ✅ 添加工作区 vs 项目 context 对比
+- ✅ 创建项目自己的 context.md（吃自己的狗粮）
+- ✅ 更新版本到 v0.2.0
+**决策**:
+- 区分元项目管理（工作区）和具体业务（项目）
+- 自动检测：目录名包含 workspace → 工作区模板
 
 ### 2026-02-04 (会话 #12)
 **主题**: 完成项目发布和文档优化

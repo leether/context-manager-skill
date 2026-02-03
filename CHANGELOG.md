@@ -7,7 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v0.1.0
 
 ## [Unreleased]
 
-## [0.1.1] - 2026-02-04
+## [0.2.0] - 2026-02-04
+
+### Added
+- **区分工作区和项目 context** - 支持两种不同的模板
+  - `ctx init --type workspace` - 工作区模板（元项目管理）
+  - `ctx init --type project` - 项目模板（具体业务）
+  - `ctx init --type auto` - 自动检测（默认）
+- **智能类型检测** - 目录名包含 'workspace' 自动使用工作区模板
+- **工作区 context 模板** - 关注工具链、规范、跨项目任务
+- **SKILL.md 更新** - 添加工作区 vs 项目 context 详细说明章节
+- **双层上下文系统** - 工作区层（战略）+ 项目层（战术）
+
+### Changed
+- `ctx init` 命令现在支持 `--type` 参数
+- 改进了模板生成逻辑，分离工作区和项目模板
+
+### Documentation
+- 添加工作区 vs 项目 context 对比表格
+- 添加双层上下文系统说明
+- 添加更多使用场景示例
+
+## [0.1.4] - 2026-02-04
 
 ### Added
 - **Enhanced README**: Complete restructure with scenario-based approach
