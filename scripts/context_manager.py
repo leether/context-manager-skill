@@ -291,8 +291,8 @@ def cmd_status(_args):
     show_status()
 
 
-def cmd_init(_args):
-    """初始化新项目（融合版模板）"""
+def cmd_init(args):
+    """初始化 context（支持工作区和项目两种模板）"""
     context_dir = get_context_dir()
     context_file = context_dir / "context.md"
 
@@ -303,11 +303,96 @@ def cmd_init(_args):
     # 创建 .claude 目录
     context_dir.mkdir(exist_ok=True)
 
-    # 生成融合版模板
+    # 确定模板类型
+    template_type = getattr(args, 'type', 'auto')
     project_name = Path.cwd().name
     today = datetime.now().strftime("%Y-%m-%d")
 
-    template = f"""---
+    # 自动检测：如果目录名是 workspace，默认为工作区模板
+    if template_type == 'auto':
+        if project_name == 'workspace' or project_name.endswith('workspace'):
+            template_type = 'workspace'
+        else:
+            template_type = 'project'
+
+    if template_type == 'workspace':
+        template = _get_workspace_template(project_name, today)
+    else:
+        template = _get_project_template(project_name, today)
+
+    context_file.write_text(template, encoding="utf-8")
+    print(f"✅ 已创建 {context_file}")
+    print(f"\n📝 项目: {project_name}")
+    print(f"   类型: {'工作区 (元项目)' if template_type == 'workspace' else '具体项目'}")
+    print("   请编辑 context.md 填写详细信息\n")
+
+
+def _get_workspace_template(project_name, today):
+    """生成工作区 context 模板"""
+    return f"""---
+# ============ 基本信息 ============
+project: {project_name}
+created: {today}
+last_session: {today}
+session_count: 1
+
+# ============ 状态分类 ============
+status: active
+category: 工作区管理
+
+# ============ 工作追踪 ============
+current_focus: "优化工作流和工具链"
+next_steps: "统一各项目的 CI/CD 配置"
+
+# ============ 项目描述 ============
+brief: "个人开发工作区 - 多项目并行开发环境"
+
+# ============ 工具链 ============
+stack:
+  - Python 3.9+
+  - GitHub Actions
+  - Claude Code
+  - Git
+
+---
+
+## 🎯 工作区级别任务
+- [ ] 统一各项目的 GitHub Actions 配置
+- [ ] 建立通用的代码规范
+- [ ] 优化项目切换流程
+- [ ] 整理技能库和工具链
+
+## 📊 项目组合管理
+### 进行中
+- <!-- 列出活跃项目 -->
+
+### 已暂停
+- <!-- 列出暂停项目 -->
+
+### 已完成
+- <!-- 列出完成项目 -->
+
+## 🔧 工具链配置
+<!-- 记录工作区级别的工具配置 -->
+
+## 📝 会话记录
+
+### {today} (会话 #1)
+**主题**: 工作区初始化
+**完成**:
+- ✅ 创建工作区 context.md
+- ✅ 配置开发环境
+
+## 💡 工作区改进
+<!-- 记录工作流优化、工具链改进等 -->
+
+## 🔗 相关资源
+"""
+
+
+def _get_project_template(project_name, today):
+    """生成具体项目 context 模板"""
+    return f"""---
 # ============ 基本信息 ============
 project: {project_name}
 created: {today}
@@ -359,11 +444,6 @@ stack:
 ## 🔗 相关资源
 <!-- 链接、文档等 -->
 """
-
-    context_file.write_text(template, encoding="utf-8")
-    print(f"✅ 已创建 {context_file}")
-    print(f"\n📝 项目: {project_name}")
-    print("   请编辑 context.md 填写项目信息\n")
 
 
 def cmd_switch(args):
@@ -580,7 +660,13 @@ def main():
     subparsers.add_parser("status", help="显示简要状态")
 
     # init 命令
-    subparsers.add_parser("init", help="初始化新项目")
+    init_parser = subparsers.add_parser("init", help="初始化 context.md")
+    init_parser.add_argument(
+        "--type", "-t",
+        choices=["workspace", "project", "auto"],
+        default="auto",
+        help="Context 类型: workspace(工作区), project(项目), auto(自动检测)"
+    )
 
     # switch 命令
     switch_parser = subparsers.add_parser("switch", help="切换到指定项目")
