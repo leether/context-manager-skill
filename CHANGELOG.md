@@ -7,10 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v0.1.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-02-04
+
 ### Added
-- Initial release preparation
-- Open source project structure
-- Comprehensive documentation
+- **Enhanced README**: Complete restructure with scenario-based approach
+  - Added 3 typical usage scenarios
+  - Deep dive into pain points and solutions
+  - Design philosophy with 4 detailed trade-off analyses
+  - ROI calculation with 3 user scenarios
+  - Comprehensive industry comparison (vs planning-with-files, beads, Obsidian, Jira)
+- **GitHub Actions CI/CD**: Complete automated workflow
+  - CI pipeline: lint, test (Python 3.9-3.13), build, integration tests
+  - Release automation: auto-create GitHub releases and PyPI publishing
+  - Code coverage integration with Codecov
+- **Repository metadata**: Added 15 GitHub topics for better discoverability
+- **CI status badge**: Added to README for real-time build status
+
+### Changed
+- README structure reorganized for better storytelling
+  - From feature-focused → scenario-driven approach
+  - Added decision tree for tool selection
+  - Enhanced quick start guide with realistic examples
+  - Improved technical implementation details
+- Updated test coverage badge (58% → 57.7%)
+
+### Fixed
+- README encoding issue ("工区" → "工作区")
+- CI workflow improved error handling
+
+### Documentation
+- README expanded from 548 to 1051 lines (+915/-340)
+- Added deep trade-off analysis for design decisions
+- Added ROI calculations with concrete numbers
+- Added tool comparison matrix
 
 ## [0.1.0] - 2026-02-03
 
