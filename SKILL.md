@@ -75,17 +75,29 @@ ctx switch example-project
 ```
 切换到指定项目并显示其状态。
 
-### `ctx init` - 初始化新项目
+### `ctx init` - 初始化 context
 ```
-ctx init
+ctx init                           # 自动检测类型
+ctx init --type workspace          # 工作区模板
+ctx init --type project            # 项目模板
+ctx init -t workspace             # 简写
 ```
-在当前目录创建融合版 `.claude/context.md` 模板，包含：
-- 基本信息（项目名、日期、会话计数）
-- 状态分类（status、category、project_type）
-- 工作追踪（current_focus、next_steps、branch）
-- 项目描述（brief、stack）
-- 待办事项模板
-- 会话记录模板
+
+**两种 Context 类型**:
+
+1. **工作区 Context** (`--type workspace`)
+   - 用途: 元项目管理（工具链、规范、跨项目任务）
+   - 适用: 工作区根目录、包含多个项目的容器
+   - 内容: 工作区级别任务、工具链配置、项目组合管理
+
+2. **项目 Context** (`--type project`)
+   - 用途: 具体业务（功能、待办、会话历史）
+   - 适用: 具体项目目录
+   - 内容: 业务功能、技术实现、项目状态
+
+**自动检测** (`--type auto` 默认):
+- 目录名包含 'workspace' → 工作区模板
+- 其他目录 → 项目模板
 
 ### `ctx update <字段> <值>` - 更新字段
 ```
@@ -282,6 +294,98 @@ mkdir ~/workspace/new-project
 cd ~/workspace/new-project
 ctx init         # 创建融合版模板
 ```
+
+### 场景 7: 初始化工作区 context
+```bash
+cd ~/workspace
+ctx init --type workspace    # 或: ctx init -t workspace
+```
+
+### 场景 8: 初始化项目 context
+```bash
+cd ~/workspace/my-project
+ctx init --type project      # 或: ctx init -t project
+```
+
+## 工作区 vs 项目 Context
+
+### 核心区别
+
+| 维度 | 工作区 Context | 项目 Context |
+|------|---------------|-------------|
+| **粒度** | 宏观、跨项目 | 微观、具体项目 |
+| **时间跨度** | 长期（月/年） | 短期（周/天） |
+| **任务类型** | 工具链、规范、协调 | 功能、Bug、优化 |
+| **会话内容** | 工作流改进决策 | 功能实现进展 |
+| **关注点** | 效率、质量、协作 | 用户价值、业务逻辑 |
+
+### 工作区 Context 适用场景
+
+**何时使用** `--type workspace`:
+- ✅ 工作区根目录
+- ✅ 需要记录跨项目的任务
+- ✅ 管理工具链和规范
+- ✅ 追踪项目组合状态
+
+**包含内容**:
+```markdown
+## 🎯 工作区级别任务
+- [ ] 统一 CI/CD 配置
+- [ ] 建立代码规范
+- [ ] 优化项目切换流程
+
+## 📊 项目组合管理
+### 进行中
+- podcast-app
+- context-manager-skill
+
+## 🔧 工具链配置
+- Python 版本管理
+- GitHub Actions 模板
+```
+
+### 项目 Context 适用场景
+
+**何时使用** `--type project`:
+- ✅ 具体业务项目
+- ✅ 需要追踪功能开发
+- ✅ 记录会话历史
+- ✅ 管理待办事项
+
+**包含内容**:
+```markdown
+## 📋 待办事项
+### P0 [本周]
+- [ ] 完成音频上传
+- [ ] 实现同步逻辑
+
+## 📝 会话记录
+### 2026-02-04 (会话 #5)
+**主题**: 音频同步
+**完成**:
+- ✅ 实现文件上传
+```
+
+### 双层上下文系统
+
+```
+工作区层 (战略)
+├── 工具链配置
+├── 代码规范
+├── 跨项目任务
+└── 项目组合管理
+    ↓ 协调
+项目层 (战术)
+├── 业务功能
+├── 技术实现
+├── 待办事项
+└── 会话历史
+```
+
+**实践建议**:
+1. **工作区 context** - 月度/季度回顾时更新
+2. **项目 context** - 每次会话时更新
+3. **定期同步** - 将项目进展同步到工作区 context
 
 ## 依赖
 
