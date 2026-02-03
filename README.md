@@ -922,6 +922,42 @@ ctx update status active
 
 ### 进阶使用
 
+#### 🚀 Shell 集成 - 自动显示项目上下文
+
+让每次打开终端时自动显示项目关键信息，无需手动输入命令。
+
+**快速配置（3 步）：**
+
+```bash
+# 1. 复制脚本到技能目录
+cp show-context.sh ~/.claude/context-manager-skill/
+
+# 2. 添加到 shell 配置
+if [ -f ~/.claude/context-manager-skill/show-context.sh ]; then
+    ~/.claude/context-manager-skill/show-context.sh
+fi
+
+# 3. 重新加载配置
+source ~/.zshrc  # 或 source ~/.bashrc
+```
+
+现在每次打开终端，都会自动看到：
+```
+══════════════════════════════════════════════════════════════
+📂 项目上下文 - my-project
+══════════════════════════════════════════════════════════════
+📊 状态: active | 分类: 产品
+🎯 当前焦点: 完成核心功能
+📅 会话 #5 | 最后工作: 2026-02-04
+══════════════════════════════════════════════════════════════
+```
+
+📖 **详细配置和自定义选项**：参见 [AUTO_DISPLAY.md](AUTO_DISPLAY.md)
+
+---
+
+#### 命令示例
+
 ```bash
 # 初始化新项目
 cd ~/workspace/new-project
