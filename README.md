@@ -2,6 +2,7 @@
 
 <div align="center">
 
+[![CI Status](https://github.com/leether/context-manager-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/leether/context-manager-skill/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Python: 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)]
 [![Tests: 57%](https://img.shields.io/badge/coverage-57.7%25-brightgreen.svg)]
